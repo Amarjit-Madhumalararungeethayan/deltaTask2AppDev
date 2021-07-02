@@ -30,6 +30,7 @@ class PingPongView(context: Context, attrs: AttributeSet?) : View(context, attrs
     val score = Paint()
     val bg1 = Paint()
     val voila = Paint()
+    val oppo = Paint()
 
     init
     {
@@ -43,6 +44,10 @@ class PingPongView(context: Context, attrs: AttributeSet?) : View(context, attrs
 
         voila.color =  ContextCompat.getColor(context, R.color.voila)
         voila.style = Paint.Style.FILL
+
+        oppo.color =  ContextCompat.getColor(context, R.color.voila)
+        oppo.style = Paint.Style.FILL
+
     }
 
     val barW = 200
@@ -64,8 +69,11 @@ class PingPongView(context: Context, attrs: AttributeSet?) : View(context, attrs
         //BG
         canvas?.drawRect(0f, 0f, width.toFloat(), height.toFloat(), bg1)
 
-        //Bar
+        //Bar Player
         canvas?.drawRoundRect(p1, (height - barH - 40f).toFloat(), p1 + barW, (height - 40f).toFloat(),20f,20f, voila)
+                                        //left, top, right, bottom
+        //Bar Opponent
+        canvas?.drawRoundRect(x1 + 100f, 40f, x1 - 100f , 115f,20f,20f, oppo)
 
         //score
         canvas?.drawText(point.toString(), width.toFloat() - 200f, 200f, score)
@@ -167,9 +175,9 @@ class PingPongView(context: Context, attrs: AttributeSet?) : View(context, attrs
                     x1 = width - radius
                     dX *= -1
                 }
-                else if (y1 < radius)
+                else if (y1 < radius + 115f)
                 {
-                    y1 = radius
+                    y1 = radius + 115f
                     dY *= -1
                     player.start()
                 }
