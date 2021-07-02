@@ -7,13 +7,13 @@ import kotlinx.coroutines.Dispatchers
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 
-class ViewModel2(application : Application):AndroidViewModel(application) {
+class ViewEasy(application : Application):AndroidViewModel(application) {
 
-    private val repository = DataStoreS(application)
+    private val repository = DataStoreR(application)
 
     val readFrom = repository.read.asLiveData()
 
-    fun saveTo(miNum : Int) = viewModelScope.launch(Dispatchers.IO){
-        repository.saveTo(miNum)
+    fun saveTo1(myNum1 : Int) = viewModelScope.launch(Dispatchers.IO){
+        repository.saveTo(myNum1)
     }
-}
+    }

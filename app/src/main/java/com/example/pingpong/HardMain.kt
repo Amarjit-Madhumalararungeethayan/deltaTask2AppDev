@@ -1,18 +1,10 @@
 package com.example.pingpong
 
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.CountDownTimer
-import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.lifecycle.ViewModelProvider
-import com.example.pingpong.databinding.ActivityGameBinding
 import com.example.pingpong.databinding.ActivityHmodeBinding
-import java.math.RoundingMode
-import java.text.DecimalFormat
-import java.util.*
-import kotlin.concurrent.thread
 
 var gLoBal = 0
 var temp = 0
@@ -20,7 +12,7 @@ var checker = 0
 
 class hMode : AppCompatActivity() {
     lateinit var binding: ActivityHmodeBinding
-    private lateinit var viewModel: ViewModel2
+    private lateinit var viewModel: viewHard
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +29,7 @@ class hMode : AppCompatActivity() {
             binding.gameH.letsGo()
         }
 
-        viewModel = ViewModelProvider(this).get(ViewModel2::class.java)
+        viewModel = ViewModelProvider(this).get(viewHard::class.java)
         viewModel.readFrom.observe(this, { miNum ->
 
             binding.textView.text = miNum.toString()

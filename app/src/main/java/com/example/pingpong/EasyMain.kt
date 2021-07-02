@@ -1,7 +1,5 @@
 package com.example.pingpong
 
-import android.content.Context
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.ActionBar
@@ -12,7 +10,7 @@ var checkerQ = 0
 
 class Game : AppCompatActivity() {
     lateinit var binding: ActivityGameBinding
-    private lateinit var viewModel : ViewModel
+    private lateinit var viewModel : ViewEasy
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +27,7 @@ class Game : AppCompatActivity() {
             binding.PingPongView.letsGo()
         }
 
-        viewModel = ViewModelProvider(this).get(ViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(ViewEasy::class.java)
         viewModel.readFrom.observe(this, {myNum ->
 
             binding.textView.text = myNum.toString()
