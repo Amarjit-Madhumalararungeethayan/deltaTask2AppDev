@@ -19,8 +19,8 @@ class Game : AppCompatActivity() {
 
         binding.btnStart.setOnClickListener {
             binding.textView2.text = ""
-            if(gLoBalQ > checkerQ){
-                val myNum = gLoBalQ
+            if(gLoBalQ > checkerQ){                 //speed increases in easy mode if user clicks play again while the game is on
+                val myNum = gLoBalQ                     // in case user wants a faster speed
                 viewModel.saveTo1(myNum)
                 checkerQ = gLoBalQ
             }

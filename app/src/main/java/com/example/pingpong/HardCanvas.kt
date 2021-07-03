@@ -14,6 +14,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 
 var point2 = 0
 var global = 0
@@ -152,6 +153,8 @@ class gameHard(context: Context, attrs: AttributeSet?) : View(context, attrs)
 
     }
     val player = MediaPlayer.create(context, R.raw.boi)
+    val thud = MediaPlayer.create(context, R.raw.bounce)
+    val gg = MediaPlayer.create(context, R.raw.gameover)
 
     inner class GameThread : Thread() {
         override fun run() {
@@ -159,6 +162,7 @@ class gameHard(context: Context, attrs: AttributeSet?) : View(context, attrs)
                 //changes in center
                 x1 += dX
                 y1 += dY
+
 
                 if (y1 >= height - radius - barH - 40f) {
                     if (x1 in (p1 - 75)..(p1 + 75) + barW) {
@@ -170,11 +174,12 @@ class gameHard(context: Context, attrs: AttributeSet?) : View(context, attrs)
 
                         if (point2 % 5 == 0) {
                             lvl = point2/10 + 1
-                            letsGo()
                         }
+
                     } else {
                         runG = false
                         gLoBal = point2
+                        gg.start()
                         resetNow()
                     }
                 }
@@ -182,6 +187,7 @@ class gameHard(context: Context, attrs: AttributeSet?) : View(context, attrs)
                 {
                     x1 = width - radius
                     dX *= -1
+                    thud.start()
 
                 }
                 else if (y1 < radius + 115f)
@@ -194,11 +200,10 @@ class gameHard(context: Context, attrs: AttributeSet?) : View(context, attrs)
                 {
                     x1 = radius
                     dX *= -1
+                    thud.start()
                 }
-
-
                 postInvalidate()
-                sleep(8)
+                sleep(7)
             }
         }
     }

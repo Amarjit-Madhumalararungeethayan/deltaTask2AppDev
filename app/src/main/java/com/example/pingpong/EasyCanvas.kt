@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Typeface
 import android.media.MediaPlayer
+import android.media.SoundPool
 import android.os.Build
 import android.util.AttributeSet
 import android.view.MotionEvent
@@ -24,7 +25,7 @@ class PingPongView(context: Context, attrs: AttributeSet?) : View(context, attrs
 
     var x1 = 480f
     var y1 = 200f
-    var radius = 70f
+    var radius = 76f
 
 
     val score = Paint()
@@ -141,6 +142,8 @@ class PingPongView(context: Context, attrs: AttributeSet?) : View(context, attrs
 
     }
     val player = MediaPlayer.create(context, R.raw.boi)
+    val thud = MediaPlayer.create(context, R.raw.bounce)
+    val gg = MediaPlayer.create(context, R.raw.gameover)
 
     inner class GameThread : Thread()
     {
@@ -167,6 +170,7 @@ class PingPongView(context: Context, attrs: AttributeSet?) : View(context, attrs
                     {
                         runG = false
                         gLoBalQ = point
+                        gg.start()
                         resetNow()
                     }
                 }
@@ -174,6 +178,7 @@ class PingPongView(context: Context, attrs: AttributeSet?) : View(context, attrs
                 {
                     x1 = width - radius
                     dX *= -1
+                    thud.start()
                 }
                 else if (y1 < radius + 115f)
                 {
@@ -185,6 +190,7 @@ class PingPongView(context: Context, attrs: AttributeSet?) : View(context, attrs
                 {
                     x1 = radius
                     dX *= -1
+                    thud.start()
                 }
 
 
