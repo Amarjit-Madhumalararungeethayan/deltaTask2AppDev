@@ -34,6 +34,7 @@ class gameHard(context: Context, attrs: AttributeSet?) : View(context, attrs)
     val voila = Paint()
     val levelD = Paint()
     val oppo = Paint()
+    val hs = Paint()
 
     init
     {
@@ -42,6 +43,12 @@ class gameHard(context: Context, attrs: AttributeSet?) : View(context, attrs)
         score.style = Paint.Style.FILL_AND_STROKE
         score.textSize = 120f
         score.typeface = Typeface.create("sans-serif-condensed",Typeface.BOLD)
+
+        hs.color = Color.YELLOW
+        hs.style = Paint.Style.FILL_AND_STROKE
+        hs.textSize = 175f
+        hs.typeface = Typeface.create("sans-serif-condensed",Typeface.BOLD)
+        hs.textAlign = Paint.Align.CENTER
 
         levelD.color = Color.WHITE
         levelD.style = Paint.Style.FILL_AND_STROKE
@@ -66,6 +73,7 @@ class gameHard(context: Context, attrs: AttributeSet?) : View(context, attrs)
         super.onSizeChanged(width, height, oldwidth, oldheight)
         score.textSize = 120f
         levelD.textSize = 75f
+        hs.textSize = 100f
         p1 = ((width/2) - (barW/2)).toFloat()
 
     }
@@ -78,16 +86,19 @@ class gameHard(context: Context, attrs: AttributeSet?) : View(context, attrs)
         canvas?.drawRect(0f, 0f, width.toFloat(), height.toFloat(), bg1)
 
         //Bar Player
-        canvas?.drawRoundRect(p1, (height - barH- 40f).toFloat(), p1 + barW, (height- 40f).toFloat(),20f,20f, voila)
+        canvas?.drawRoundRect(p1, (height - barH- 40f - 60f).toFloat(), p1 + barW, (height- 40f - 60f).toFloat(),20f,20f, voila)
 
         //Bar Opponent
         canvas?.drawRoundRect(x1 + 100f, 40f, x1 - 100f , 115f,20f,20f, oppo)
 
         //score
-        canvas?.drawText(point2.toString(), width.toFloat() - 200f , 200f, score)
+        canvas?.drawText(point2.toString(), width.toFloat()/2 , height.toFloat()/2 , score)
 
         //level
-        canvas?.drawText(" Level ${lvl} ", width.toFloat() -170f, 350f, levelD)
+        canvas?.drawText(" Level ${lvl} ", width.toFloat() -170f, 175f, levelD)
+
+        //hs
+        canvas?.drawText("Hello", width.toFloat()/2 , height.toFloat() - 10f, hs)
 
         //Ball
         canvas?.drawCircle(x1, y1, radius, voila)
@@ -137,8 +148,8 @@ class gameHard(context: Context, attrs: AttributeSet?) : View(context, attrs)
         postInvalidate()
     }
 
-    var dX = 5
-    var dY = 5
+    var dX = 5.0f
+    var dY = 5.0f
 
     private fun resetNow()
     {
@@ -146,8 +157,8 @@ class gameHard(context: Context, attrs: AttributeSet?) : View(context, attrs)
         val ran2 = (101..201).random()
         x1 = ran1.toFloat()
         y1 = ran2.toFloat()
-        dX = 5
-        dY = 5
+        dX = 5.0f
+        dY = 5.0f
         point2 = 0
         lvl = 1
 
@@ -164,16 +175,18 @@ class gameHard(context: Context, attrs: AttributeSet?) : View(context, attrs)
                 y1 += dY
 
 
-                if (y1 >= height - radius - barH - 40f) {
+                if (y1 >= height - radius - barH - 40f - 60f) {
                     if (x1 in (p1 - 75)..(p1 + 75) + barW) {
-                        y1 = height - radius - barH - 40f
+                        y1 = height - radius - barH - 40f - 60f
                         dY *= -1
                         point2 += 1
                         player.start()
 
 
-                        if (point2 % 5 == 0) {
-                            lvl = point2/10 + 1
+                        if (point2 % 1 == 0) {
+                            lvl = point2/5 + 1
+                            dX*= 1.025f
+                            dY*= 1.025f
                         }
 
                     } else {

@@ -1,5 +1,6 @@
 package com.example.pingpong
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.ActionBar
@@ -7,12 +8,17 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.pingpong.databinding.ActivityHmodeBinding
 
 var gLoBal = 0
-var temp = 0
 var checker = 0
 
 class hMode : AppCompatActivity() {
     lateinit var binding: ActivityHmodeBinding
     private lateinit var viewModel: viewHard
+
+    override fun onBackPressed() {
+        binding.gameH.letsStop()
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

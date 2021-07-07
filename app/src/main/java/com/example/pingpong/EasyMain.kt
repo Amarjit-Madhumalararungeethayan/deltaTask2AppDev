@@ -1,5 +1,6 @@
 package com.example.pingpong
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.ActionBar
@@ -12,6 +13,12 @@ class Game : AppCompatActivity() {
     lateinit var binding: ActivityGameBinding
     private lateinit var viewModel : ViewEasy
 
+    override fun onBackPressed() {
+        binding.PingPongView.letsStop()
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityGameBinding.inflate(layoutInflater)
@@ -19,10 +26,10 @@ class Game : AppCompatActivity() {
 
         binding.btnStart.setOnClickListener {
             binding.textView2.text = ""
-            if(gLoBalQ > checkerQ){                 //speed increases in easy mode if user clicks play again while the game is on
-                val myNum = gLoBalQ                     // in case user wants a faster speed
+           if(gLoBalQ > checkerQ){                 //speed increases in easy mode if user clicks play again while the game is on
+                 val myNum = gLoBalQ                     // in case user wants a faster speed
                 viewModel.saveTo1(myNum)
-                checkerQ = gLoBalQ
+               checkerQ = gLoBalQ
             }
             binding.PingPongView.letsGo()
         }

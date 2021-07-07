@@ -14,13 +14,18 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 
 var point = 0
 var gLoBalQ = 0
 
+
+
 @SuppressLint("ResourceAsColor")
 class PingPongView(context: Context, attrs: AttributeSet?) : View(context, attrs)
 {
+    //private lateinit var viewModel : ViewEasy
+
     var xChange = 0f
 
     var x1 = 480f
@@ -32,6 +37,7 @@ class PingPongView(context: Context, attrs: AttributeSet?) : View(context, attrs
     val bg1 = Paint()
     val voila = Paint()
     val oppo = Paint()
+    val ls = Paint()
 
     init
     {
@@ -42,6 +48,13 @@ class PingPongView(context: Context, attrs: AttributeSet?) : View(context, attrs
         score.style = Paint.Style.FILL_AND_STROKE
         score.textSize = 120f
         score.typeface = Typeface.create("sans-serif-condensed",Typeface.BOLD)
+        score.textAlign = Paint.Align.CENTER
+
+        ls.color = Color.YELLOW
+        ls.style = Paint.Style.FILL_AND_STROKE
+        ls.textSize = 75f
+        ls.typeface = Typeface.create("sans-serif-condensed",Typeface.NORMAL)
+        ls.textAlign = Paint.Align.CENTER
 
         voila.color =  ContextCompat.getColor(context, R.color.voila)
         voila.style = Paint.Style.FILL
@@ -58,7 +71,8 @@ class PingPongView(context: Context, attrs: AttributeSet?) : View(context, attrs
     override fun onSizeChanged(width: Int, height: Int, oldwidth: Int, oldheight: Int)
     {
         super.onSizeChanged(width, height, oldwidth, oldheight)
-        score.textSize = 80f
+        score.textSize = 120f
+        ls.textSize = 75f
         p1 = ((width/2) - (barW/2)).toFloat()
 
     }
@@ -71,13 +85,16 @@ class PingPongView(context: Context, attrs: AttributeSet?) : View(context, attrs
         canvas?.drawRect(0f, 0f, width.toFloat(), height.toFloat(), bg1)
 
         //Bar Player
-        canvas?.drawRoundRect(p1, (height - barH - 40f).toFloat(), p1 + barW, (height - 40f).toFloat(),20f,20f, voila)
+        canvas?.drawRoundRect(p1, (height - barH - 40f -60f).toFloat(), p1 + barW, (height - 40f -60f).toFloat(),20f,20f, voila)
                                         //left, top, right, bottom
         //Bar Opponent
         canvas?.drawRoundRect(x1 + 100f, 40f, x1 - 100f , 115f,20f,20f, oppo)
 
         //score
-        canvas?.drawText(point.toString(), width.toFloat() - 200f, 200f, score)
+        canvas?.drawText(point.toString(), width.toFloat()/2, height.toFloat()/2, score)
+
+        //hs
+        canvas?.drawText("Hello", width.toFloat()/2 , height.toFloat() - 10f, ls)
 
         //Ball
         canvas?.drawCircle(x1, y1, radius, voila)
@@ -132,10 +149,22 @@ class PingPongView(context: Context, attrs: AttributeSet?) : View(context, attrs
 
     private fun resetNow()
     {
+        /**
+        if(gLoBalQ > checkerQ){
+            val myNum = gLoBalQ
+            viewModel.saveTo1(myNum)
+            checkerQ = gLoBalQ
+        }
+        viewModel = ViewModelProvider().get(ViewEasy::class.java)
+        viewModel.readFrom.observe(this, {myNum ->
+
+
+        })
+        **/
+
         val ran1 = (101..850).random()
-        val ran2 = (101..201).random()
         x1 = ran1.toFloat()
-        y1 = ran2.toFloat()
+        y1 = 118f
         dX = 5
         dY = 5
         point = 0
@@ -155,11 +184,11 @@ class PingPongView(context: Context, attrs: AttributeSet?) : View(context, attrs
                 x1 += dX
                 y1 += dY
 
-                if (y1 >= height - radius - barH -40f)
+                if (y1 >= height - radius - barH -40f - 60f)
                 {
                     if (x1 in (p1-80)..(p1+80) + barW)
                     {
-                        y1 = height - radius - barH -40f
+                        y1 = height - radius - barH -40f - 60f
                         dY *= -1
                         point += 1
 
@@ -200,3 +229,4 @@ class PingPongView(context: Context, attrs: AttributeSet?) : View(context, attrs
         }
     }
 }
+
