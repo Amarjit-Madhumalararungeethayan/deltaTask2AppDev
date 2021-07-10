@@ -26,30 +26,27 @@ class Game : AppCompatActivity() {
 
         binding.btnStart.setOnClickListener {
             binding.textView2.text = ""
-           if(gLoBalQ > checkerQ){                 //speed increases in easy mode if user clicks play again while the game is on
-                 val myNum = gLoBalQ                     // in case user wants a faster speed
+            if (gLoBalQ > checkerQ) {                 //speed increases in easy mode if user clicks play again while the game is on
+                val myNum = gLoBalQ                     // in case user wants a faster speed
                 viewModel.saveTo1(myNum)
-               checkerQ = gLoBalQ
+                checkerQ = gLoBalQ
             }
             binding.PingPongView.letsGo()
         }
 
         viewModel = ViewModelProvider(this).get(ViewEasy::class.java)
-        viewModel.readFrom.observe(this, {myNum ->
+        viewModel.readFrom.observe(this, { myNum ->
 
             binding.textView.text = myNum.toString()
 
         })
-
-        binding.btnStop.setOnClickListener {
-            binding.PingPongView.letsStop()
-            binding.textView2.text = "Click Play to Start ..."
-        }
 
         val actionBar: ActionBar? = supportActionBar
         if (actionBar != null) {
             actionBar.hide()
         }
     }
-}
+    }
+
+
 

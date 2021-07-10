@@ -94,7 +94,7 @@ class PingPongView(context: Context, attrs: AttributeSet?) : View(context, attrs
         canvas?.drawText(point.toString(), width.toFloat()/2, height.toFloat()/2, score)
 
         //hs
-        canvas?.drawText("Hello", width.toFloat()/2 , height.toFloat() - 10f, ls)
+        canvas?.drawText("", width.toFloat()/2 , height.toFloat() - 10f, ls)
 
         //Ball
         canvas?.drawCircle(x1, y1, radius, voila)

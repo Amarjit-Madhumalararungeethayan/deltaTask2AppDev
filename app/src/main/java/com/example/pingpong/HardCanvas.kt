@@ -2,6 +2,7 @@ package com.example.pingpong
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
@@ -14,16 +15,18 @@ import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.ViewModelProvider
 
 var point2 = 0
-var global = 0
+var runG = false
 
 @SuppressLint("ResourceAsColor")
 class gameHard(context: Context, attrs: AttributeSet?) : View(context, attrs)
 {
-    var xChange = 0f
+    //lateinit var viewModel: viewHard
 
+    var xChange = 0f
     var x1 = 480f
     var y1 = 200f
     var radius = 70f
@@ -63,7 +66,7 @@ class gameHard(context: Context, attrs: AttributeSet?) : View(context, attrs)
         oppo.style = Paint.Style.FILL
     }
 
-    val barW = 200
+    var barW = 200
     val barH = 75
     var p1 = 0f
     var lvl = 0
@@ -98,7 +101,7 @@ class gameHard(context: Context, attrs: AttributeSet?) : View(context, attrs)
         canvas?.drawText(" Level ${lvl} ", width.toFloat() -170f, 175f, levelD)
 
         //hs
-        canvas?.drawText("Hello", width.toFloat()/2 , height.toFloat() - 10f, hs)
+        canvas?.drawText("", width.toFloat()/2 , height.toFloat() - 10f, hs)
 
         //Ball
         canvas?.drawCircle(x1, y1, radius, voila)
@@ -134,7 +137,7 @@ class gameHard(context: Context, attrs: AttributeSet?) : View(context, attrs)
         }
         invalidate() //kinda loops the onDraw method
     }
-    var runG = false
+
 
     fun letsGo()
     {
@@ -161,8 +164,18 @@ class gameHard(context: Context, attrs: AttributeSet?) : View(context, attrs)
         dY = 5.0f
         point2 = 0
         lvl = 1
+        end = true
+        powerReset()
 
     }
+    fun powerUp(){
+        if(runG == true)
+            barW = 300
+    }
+    fun powerReset(){
+        barW = 200
+    }
+
     val player = MediaPlayer.create(context, R.raw.boi)
     val thud = MediaPlayer.create(context, R.raw.bounce)
     val gg = MediaPlayer.create(context, R.raw.gameover)
