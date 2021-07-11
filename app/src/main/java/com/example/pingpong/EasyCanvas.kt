@@ -7,19 +7,16 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Typeface
 import android.media.MediaPlayer
-import android.media.SoundPool
 import android.os.Build
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProvider
 
 var point = 0
 var gLoBalQ = 0
-
-
+var runGe = false
 
 @SuppressLint("ResourceAsColor")
 class PingPongView(context: Context, attrs: AttributeSet?) : View(context, attrs)
@@ -27,7 +24,6 @@ class PingPongView(context: Context, attrs: AttributeSet?) : View(context, attrs
     //private lateinit var viewModel : ViewEasy
 
     var xChange = 0f
-
     var x1 = 480f
     var y1 = 200f
     var radius = 76f
@@ -130,16 +126,15 @@ class PingPongView(context: Context, attrs: AttributeSet?) : View(context, attrs
         }
         invalidate() //kinda loops the onDraw method
     }
-    var runG = false
 
     fun letsGo()
     {
-        runG = true
+        runGe = true
         GameThread().start()
     }
     fun letsStop()
     {
-        runG = false
+        runGe = false
         resetNow()
         postInvalidate()
     }
@@ -178,7 +173,7 @@ class PingPongView(context: Context, attrs: AttributeSet?) : View(context, attrs
     {
         override fun run()
         {
-            while (runG)
+            while (runGe)
             {
                 //changes in center
                 x1 += dX
@@ -197,7 +192,7 @@ class PingPongView(context: Context, attrs: AttributeSet?) : View(context, attrs
                     }
                     else
                     {
-                        runG = false
+                        runGe = false
                         gLoBalQ = point
                         gg.start()
                         resetNow()

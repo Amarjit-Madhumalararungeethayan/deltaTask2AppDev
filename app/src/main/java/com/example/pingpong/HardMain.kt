@@ -48,12 +48,6 @@ class hMode : AppCompatActivity() {
 
         })
 
-        //binding.imageView4.setOnClickListener(){
-            //binding.gameH.powerUp()
-            //powerUpCountDown()
-               // binding.imageView4.isClickable = false
-        //}
-
         val actionBar: ActionBar? = supportActionBar
         if (actionBar != null) {
             actionBar.hide()

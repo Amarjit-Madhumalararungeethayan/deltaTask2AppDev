@@ -3,7 +3,9 @@ package com.example.pingpong
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.CountDownTimer
 import androidx.appcompat.app.ActionBar
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.example.pingpong.databinding.ActivityGameBinding
 
@@ -26,11 +28,7 @@ class Game : AppCompatActivity() {
 
         binding.btnStart.setOnClickListener {
             binding.textView2.text = ""
-            if (gLoBalQ > checkerQ) {                 //speed increases in easy mode if user clicks play again while the game is on
-                val myNum = gLoBalQ                     // in case user wants a faster speed
-                viewModel.saveTo1(myNum)
-                checkerQ = gLoBalQ
-            }
+            highScoreRefresh()
             binding.PingPongView.letsGo()
         }
 
@@ -46,7 +44,25 @@ class Game : AppCompatActivity() {
             actionBar.hide()
         }
     }
+
+    private fun highScoreRefresh() {
+            val countDown: CountDownTimer
+            countDown = object : CountDownTimer(10000000, 1000) {
+                override fun onTick(millisecsToFinish: Long) {
+                    if (gLoBalQ > checkerQ) {                 //speed increases in easy mode if user clicks play again while the game is on
+                        val myNum = gLoBalQ                     // in case user wants a faster speed
+                        viewModel.saveTo1(myNum)
+                        checkerQ = gLoBalQ
+                    }
+                }
+
+                override fun onFinish() {
+                }
+            }
+            countDown.start()
     }
+}
+
 
 
 
