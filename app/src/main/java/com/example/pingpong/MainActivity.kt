@@ -65,6 +65,10 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, hMode::class.java)
             startActivity(intent)
         }
+        binding.ai.setOnClickListener(){
+            val intent = Intent(this, againstAI::class.java)
+            startActivity(intent)
+        }
 
         val actionBar: ActionBar? = supportActionBar
         if (actionBar != null) {

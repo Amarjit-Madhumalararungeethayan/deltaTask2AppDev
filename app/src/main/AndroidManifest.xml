@@ -11,7 +11,10 @@
         android:roundIcon="@mipmap/monkey_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PingPong">
-        <activity android:name=".hMode"
+        <activity android:name=".againstAI"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".hMode"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Game"

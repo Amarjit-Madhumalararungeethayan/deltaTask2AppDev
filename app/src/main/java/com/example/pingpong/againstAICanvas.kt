@@ -2,7 +2,6 @@ package com.example.pingpong
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
@@ -12,31 +11,31 @@ import android.os.Build
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.startActivity
-import androidx.lifecycle.ViewModelProvider
 
-var point2 = 0
-var runG = false
+var playerPoint = 0
+var aiPoint = 0
+var incP = 0
+var incA = 0
 
-@SuppressLint("ResourceAsColor")
-class gameHard(context: Context, attrs: AttributeSet?) : View(context, attrs)
-{
-
+class againstAICanvas(context: Context, attrs: AttributeSet?) : View(context, attrs) {
     var xChange = 0f
     var x1 = 480f
-    var y1 = 200f
-    var radius = 70f
+    var y1 = 220f
+    var radius = 60f
+
+    var xp = 100f
+    var yp = 200f
+    var rp = 25f
 
 
     val score = Paint()
     val bg1 = Paint()
     val voila = Paint()
-    val levelD = Paint()
     val oppo = Paint()
     val hs = Paint()
+    var pointCircle = Paint()
 
     init
     {
@@ -44,25 +43,22 @@ class gameHard(context: Context, attrs: AttributeSet?) : View(context, attrs)
         score.color = Color.WHITE
         score.style = Paint.Style.FILL_AND_STROKE
         score.textSize = 120f
-        score.typeface = Typeface.create("sans-serif-condensed",Typeface.BOLD)
+        score.typeface = Typeface.create("sans-serif-condensed", Typeface.BOLD)
 
         hs.color = Color.YELLOW
         hs.style = Paint.Style.FILL_AND_STROKE
         hs.textSize = 175f
-        hs.typeface = Typeface.create("sans-serif-condensed",Typeface.BOLD)
+        hs.typeface = Typeface.create("sans-serif-condensed", Typeface.BOLD)
         hs.textAlign = Paint.Align.CENTER
-
-        levelD.color = Color.WHITE
-        levelD.style = Paint.Style.FILL_AND_STROKE
-        levelD.textSize = 75f
-        levelD.typeface = Typeface.create("sans-serif-condensed",Typeface.NORMAL)
-        levelD.textAlign = Paint.Align.CENTER
 
         voila.color =  ContextCompat.getColor(context, R.color.voila)
         voila.style = Paint.Style.FILL
 
         oppo.color =  ContextCompat.getColor(context, R.color.voila)
         oppo.style = Paint.Style.FILL
+
+        pointCircle.color = Color.GREEN
+        pointCircle.style = Paint.Style.FILL_AND_STROKE
     }
 
     var barW = 200
@@ -74,7 +70,6 @@ class gameHard(context: Context, attrs: AttributeSet?) : View(context, attrs)
     {
         super.onSizeChanged(width, height, oldwidth, oldheight)
         score.textSize = 120f
-        levelD.textSize = 75f
         hs.textSize = 100f
         p1 = ((width/2) - (barW/2)).toFloat()
 
@@ -91,19 +86,24 @@ class gameHard(context: Context, attrs: AttributeSet?) : View(context, attrs)
         canvas?.drawRoundRect(p1, (height - barH - 60f).toFloat(), p1 + barW, (height - 60f).toFloat(),20f,20f, voila)
 
         //Bar Opponent
-        canvas?.drawRoundRect(x1 + 100f, 40f, x1 - 100f , 115f,20f,20f, oppo)
-
-        //score
-        canvas?.drawText(point2.toString(), width.toFloat()/2 , height.toFloat()/2 , score)
-
-        //level
-        canvas?.drawText(" Level ${lvl} ", width.toFloat() -170f, 175f, levelD)
-
-        //hs
-        canvas?.drawText("", width.toFloat()/2 , height.toFloat() - 10f, hs)
+        canvas?.drawRoundRect(x1 + 100f, 80f, x1 - 100f , 155f,20f,20f, oppo)
 
         //Ball
         canvas?.drawCircle(x1, y1, radius, voila)
+
+        //players points
+        if(playerPoint != 0) {
+            for (i in 1..playerPoint){
+                canvas?.drawCircle(xp, height.toFloat() - yp - i*(70), rp, pointCircle)
+            }
+        }
+        //AIs points
+        if(aiPoint != 0) {
+            for (i in 1..aiPoint){
+                canvas?.drawCircle(width.toFloat() - xp, yp + i*(70), rp, pointCircle)
+            }
+        }
+
 
     }
 
@@ -164,15 +164,7 @@ class gameHard(context: Context, attrs: AttributeSet?) : View(context, attrs)
         point2 = 0
         lvl = 1
         end = true
-        powerReset()
 
-    }
-    fun powerUp(){
-        if(runG == true)
-            barW = 300
-    }
-    fun powerReset(){
-        barW = 200
     }
 
     val player = MediaPlayer.create(context, R.raw.boi)
@@ -191,20 +183,15 @@ class gameHard(context: Context, attrs: AttributeSet?) : View(context, attrs)
                     if (x1 in (p1 - 75)..(p1 + 75) + barW) {
                         y1 = height - radius - barH - 60f
                         dY *= -1
-                        point2 += 1
+                        playerPoint += 1
                         player.start()
 
-
-                        if (point2 % 1 == 0) {
-                            lvl = point2/5 + 1
-                            dX*= 1.025f
-                            dY*= 1.025f
-                        }
 
                     } else {
                         runG = false
                         gLoBal = point2
                         gg.start()
+                        aiPoint += 1
                         resetNow()
                     }
                 }
@@ -215,11 +202,12 @@ class gameHard(context: Context, attrs: AttributeSet?) : View(context, attrs)
                     thud.start()
 
                 }
-                else if (y1 < radius + 115f)
+                else if (y1 < radius + 155f)
                 {
-                    y1 = radius + 115f
+                    y1 = radius + 155f
                     dY *= -1
                     player.start()
+
 
                 } else if (x1 < radius)
                 {
