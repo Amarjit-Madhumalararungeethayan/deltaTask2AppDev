@@ -81,7 +81,7 @@ class PingPongView(context: Context, attrs: AttributeSet?) : View(context, attrs
         canvas?.drawRect(0f, 0f, width.toFloat(), height.toFloat(), bg1)
 
         //Bar Player
-        canvas?.drawRoundRect(p1, (height - barH - 40f -60f).toFloat(), p1 + barW, (height - 40f -60f).toFloat(),20f,20f, voila)
+        canvas?.drawRoundRect(p1, (height - barH -60f).toFloat(), p1 + barW, (height - 60f).toFloat(),20f,20f, voila)
                                         //left, top, right, bottom
         //Bar Opponent
         canvas?.drawRoundRect(x1 + 100f, 40f, x1 - 100f , 115f,20f,20f, oppo)
@@ -179,11 +179,11 @@ class PingPongView(context: Context, attrs: AttributeSet?) : View(context, attrs
                 x1 += dX
                 y1 += dY
 
-                if (y1 >= height - radius - barH -40f - 60f)
+                if (y1 >= height - radius - barH - 60f)
                 {
                     if (x1 in (p1-80)..(p1+80) + barW)
                     {
-                        y1 = height - radius - barH -40f - 60f
+                        y1 = height - radius - barH - 60f
                         dY *= -1
                         point += 1
 
@@ -208,7 +208,6 @@ class PingPongView(context: Context, attrs: AttributeSet?) : View(context, attrs
                 {
                     y1 = radius + 115f
                     dY *= -1
-                    player.start()
                 }
                 else if (x1 < radius)
                 {

@@ -89,7 +89,7 @@ class gameHard(context: Context, attrs: AttributeSet?) : View(context, attrs)
         canvas?.drawRect(0f, 0f, width.toFloat(), height.toFloat(), bg1)
 
         //Bar Player
-        canvas?.drawRoundRect(p1, (height - barH- 40f - 60f).toFloat(), p1 + barW, (height- 40f - 60f).toFloat(),20f,20f, voila)
+        canvas?.drawRoundRect(p1, (height - barH - 60f).toFloat(), p1 + barW, (height - 60f).toFloat(),20f,20f, voila)
 
         //Bar Opponent
         canvas?.drawRoundRect(x1 + 100f, 40f, x1 - 100f , 115f,20f,20f, oppo)
@@ -188,9 +188,9 @@ class gameHard(context: Context, attrs: AttributeSet?) : View(context, attrs)
                 y1 += dY
 
 
-                if (y1 >= height - radius - barH - 40f - 60f) {
+                if (y1 >= height - radius - barH - 60f) {
                     if (x1 in (p1 - 75)..(p1 + 75) + barW) {
-                        y1 = height - radius - barH - 40f - 60f
+                        y1 = height - radius - barH - 60f
                         dY *= -1
                         point2 += 1
                         player.start()
