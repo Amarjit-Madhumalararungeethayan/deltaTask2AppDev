@@ -65,6 +65,7 @@ class againstAICanvas(context: Context, attrs: AttributeSet?) : View(context, at
     val barH = 75
     var p1 = 0f
     var lvl = 0
+    var k = 101f
 
     override fun onSizeChanged(width: Int, height: Int, oldwidth: Int, oldheight: Int)
     {
@@ -86,7 +87,7 @@ class againstAICanvas(context: Context, attrs: AttributeSet?) : View(context, at
         canvas?.drawRoundRect(p1, (height - barH - 60f).toFloat(), p1 + barW, (height - 60f).toFloat(),20f,20f, voila)
 
         //Bar Opponent
-        canvas?.drawRoundRect(x1 + 100f, 80f, x1 - 100f , 155f,20f,20f, oppo)
+        canvas?.drawRoundRect(k - 100f, 80f,  k + 100f , 155f,20f,20f, oppo)
 
         //Ball
         canvas?.drawCircle(x1, y1, radius, voila)
@@ -153,12 +154,13 @@ class againstAICanvas(context: Context, attrs: AttributeSet?) : View(context, at
     var dX = 5.0f
     var dY = 5.0f
 
+    var kX = 5.0f
+
     private fun resetNow()
     {
         val ran1 = (101..850).random()
-        val ran2 = (101..201).random()
-        x1 = ran1.toFloat()
-        y1 = ran2.toFloat()
+        x1 = k
+        y1 = 217f
         dX = 5.0f
         dY = 5.0f
         point2 = 0
@@ -183,7 +185,6 @@ class againstAICanvas(context: Context, attrs: AttributeSet?) : View(context, at
                     if (x1 in (p1 - 75)..(p1 + 75) + barW) {
                         y1 = height - radius - barH - 60f
                         dY *= -1
-                        playerPoint += 1
                         player.start()
 
 
@@ -195,6 +196,23 @@ class againstAICanvas(context: Context, attrs: AttributeSet?) : View(context, at
                         resetNow()
                     }
                 }
+                if (y1 <= radius + 155f)
+                {
+                    if (x1 in (k - 125)..(k+125) + 215)
+                    {
+                        y1 = radius + 155f
+                        dY *= -1
+                        player.start()
+                    }
+                    else
+                    {
+                        playerPoint += 1
+                        runG = false
+                        resetNow()
+
+                    }
+                }
+
                 if (x1 > width - radius)
                 {
                     x1 = width - radius
@@ -202,22 +220,45 @@ class againstAICanvas(context: Context, attrs: AttributeSet?) : View(context, at
                     thud.start()
 
                 }
-                else if (y1 < radius + 155f)
-                {
-                    y1 = radius + 155f
-                    dY *= -1
-                    player.start()
-
-
-                } else if (x1 < radius)
+                else if (x1 < radius)
                 {
                     x1 = radius
                     dX *= -1
                     thud.start()
                 }
+
                 postInvalidate()
                 sleep(7)
             }
         }
+    }
+
+    inner class BarThread : Thread() {
+        override fun run(){
+            while(runG){
+
+                k+=kX
+                if(k > width.toFloat() - 100){
+                   kX *= -1
+                }
+                if(k < 100){
+                    kX *= -1
+                }
+                postInvalidate()
+                sleep(2)
+               /** var ran = (1..5).random()
+
+                if(ran == 1 || ran ==2 || ran ==3 || ran == 4){
+                    k = x1
+                    postInvalidate()
+                    sleep(7)
+                } else{
+                    sleep(1000)**/
+
+            }
+        }
+    }
+    fun barGo(){
+        BarThread().start()
     }
 }
