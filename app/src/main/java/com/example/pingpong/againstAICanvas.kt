@@ -142,8 +142,9 @@ class againstAICanvas(context: Context, attrs: AttributeSet?) : View(context, at
     fun letsGo()
     {
         runG = true
-        GameThread().start()
+        GameT().start()
     }
+
     fun letsStop()
     {
         runG = false
@@ -173,7 +174,7 @@ class againstAICanvas(context: Context, attrs: AttributeSet?) : View(context, at
     val thud = MediaPlayer.create(context, R.raw.bounce)
     val gg = MediaPlayer.create(context, R.raw.gameover)
 
-    inner class GameThread : Thread() {
+    inner class GameT : Thread() {
         override fun run() {
             while (runG) {
                 //changes in center

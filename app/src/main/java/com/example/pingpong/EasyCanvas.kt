@@ -130,7 +130,7 @@ class PingPongView(context: Context, attrs: AttributeSet?) : View(context, attrs
     fun letsGo()
     {
         runGe = true
-        GameThread().start()
+        GameT().start()
     }
     fun letsStop()
     {
@@ -169,7 +169,7 @@ class PingPongView(context: Context, attrs: AttributeSet?) : View(context, attrs
     val thud = MediaPlayer.create(context, R.raw.bounce)
     val gg = MediaPlayer.create(context, R.raw.gameover)
 
-    inner class GameThread : Thread()
+    inner class GameT : Thread()
     {
         override fun run()
         {

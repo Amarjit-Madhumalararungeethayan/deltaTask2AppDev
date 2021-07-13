@@ -2,7 +2,6 @@ package com.example.pingpong
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
@@ -12,11 +11,8 @@ import android.os.Build
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.startActivity
-import androidx.lifecycle.ViewModelProvider
 
 var point2 = 0
 var runG = false
@@ -141,7 +137,7 @@ class gameHard(context: Context, attrs: AttributeSet?) : View(context, attrs)
     fun letsGo()
     {
         runG = true
-        GameThread().start()
+        GameT().start()
     }
     fun letsStop()
     {
@@ -179,7 +175,7 @@ class gameHard(context: Context, attrs: AttributeSet?) : View(context, attrs)
     val thud = MediaPlayer.create(context, R.raw.bounce)
     val gg = MediaPlayer.create(context, R.raw.gameover)
 
-    inner class GameThread : Thread() {
+    inner class GameT : Thread() {
         override fun run() {
             while (runG) {
                 //changes in center
