@@ -37,8 +37,7 @@ class againstAICanvas(context: Context, attrs: AttributeSet?) : View(context, at
     val hs = Paint()
     var pointCircle = Paint()
 
-    init
-    {
+    init {
 
         score.color = Color.WHITE
         score.style = Paint.Style.FILL_AND_STROKE
@@ -51,10 +50,10 @@ class againstAICanvas(context: Context, attrs: AttributeSet?) : View(context, at
         hs.typeface = Typeface.create("sans-serif-condensed", Typeface.BOLD)
         hs.textAlign = Paint.Align.CENTER
 
-        voila.color =  ContextCompat.getColor(context, R.color.voila)
+        voila.color = ContextCompat.getColor(context, R.color.voila)
         voila.style = Paint.Style.FILL
 
-        oppo.color =  ContextCompat.getColor(context, R.color.voila)
+        oppo.color = ContextCompat.getColor(context, R.color.voila)
         oppo.style = Paint.Style.FILL
 
         pointCircle.color = Color.GREEN
@@ -65,43 +64,49 @@ class againstAICanvas(context: Context, attrs: AttributeSet?) : View(context, at
     val barH = 75
     var p1 = 0f
     var lvl = 0
-    var k = 101f
+    var k = 151f
 
-    override fun onSizeChanged(width: Int, height: Int, oldwidth: Int, oldheight: Int)
-    {
+    override fun onSizeChanged(width: Int, height: Int, oldwidth: Int, oldheight: Int) {
         super.onSizeChanged(width, height, oldwidth, oldheight)
         score.textSize = 120f
         hs.textSize = 100f
-        p1 = ((width/2) - (barW/2)).toFloat()
+        p1 = ((width / 2) - (barW / 2)).toFloat()
 
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    override fun onDraw(canvas: Canvas?)
-    {
+    override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         //BG
         canvas?.drawRect(0f, 0f, width.toFloat(), height.toFloat(), bg1)
 
         //Bar Player
-        canvas?.drawRoundRect(p1, (height - barH - 60f).toFloat(), p1 + barW, (height - 60f).toFloat(),20f,20f, voila)
+        canvas?.drawRoundRect(
+            p1,
+            (height - barH - 60f).toFloat(),
+            p1 + barW,
+            (height - 60f).toFloat(),
+            20f,
+            20f,
+            voila
+        )
 
         //Bar Opponent
-        canvas?.drawRoundRect(k - 100f, 80f,  k + 100f , 155f,20f,20f, oppo)
+        canvas?.drawRoundRect(k - 150f, 80f, k + 150f, 155f, 20f, 20f, oppo)
 
         //Ball
         canvas?.drawCircle(x1, y1, radius, voila)
 
         //players points
-        if(playerPoint != 0) {
-            for (i in 1..playerPoint){
-                canvas?.drawCircle(xp, height.toFloat() - yp - i*(70), rp, pointCircle)
+        if (playerPoint != 0) {
+            for (i in 1..playerPoint) {
+                canvas?.drawCircle(xp, height.toFloat() - yp - i * (70), rp, pointCircle)
             }
         }
         //AIs points
-        if(aiPoint != 0) {
-            for (i in 1..aiPoint){
-                canvas?.drawCircle(width.toFloat() - xp, yp + i*(70), rp, pointCircle)
+        if (aiPoint != 0) {
+            for (i in 1..aiPoint) {
+                canvas?.drawCircle(width.toFloat() - xp, yp + i * (70), rp, pointCircle)
             }
         }
 
@@ -109,13 +114,10 @@ class againstAICanvas(context: Context, attrs: AttributeSet?) : View(context, at
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    override fun onTouchEvent(event: MotionEvent?): Boolean
-    {
-        when (event?.action)
-        {
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        when (event?.action) {
             MotionEvent.ACTION_DOWN -> xChange = event.x
-            MotionEvent.ACTION_MOVE ->
-            {
+            MotionEvent.ACTION_MOVE -> {
                 handleMove(event)
             }
         }
@@ -123,14 +125,12 @@ class againstAICanvas(context: Context, attrs: AttributeSet?) : View(context, at
         return true
     }
 
-    private fun handleMove(event: MotionEvent)
-    {
+    private fun handleMove(event: MotionEvent) {
 
         p1 = p1 - (xChange - event.x)
         xChange = event.x
         p1 = if (p1 < 0) 0f
-        else if (p1 > width - barW)
-        {
+        else if (p1 > width - barW) {
             (width - barW).toFloat()
         } else {
             p1
@@ -139,14 +139,12 @@ class againstAICanvas(context: Context, attrs: AttributeSet?) : View(context, at
     }
 
 
-    fun letsGo()
-    {
+    fun letsGo() {
         runG = true
         GameT().start()
     }
 
-    fun letsStop()
-    {
+    fun letsStop() {
         runG = false
         resetNow()
         postInvalidate()
@@ -157,13 +155,12 @@ class againstAICanvas(context: Context, attrs: AttributeSet?) : View(context, at
 
     var kX = 5.0f
 
-    private fun resetNow()
-    {
+    private fun resetNow() {
         val ran1 = (101..850).random()
         x1 = k
         y1 = 217f
-        dX = 5.0f
-        dY = 5.0f
+        dX *= 1.25f
+        dY *= 1.25f
         point2 = 0
         lvl = 1
         end = true
@@ -197,16 +194,12 @@ class againstAICanvas(context: Context, attrs: AttributeSet?) : View(context, at
                         resetNow()
                     }
                 }
-                if (y1 <= radius + 155f)
-                {
-                    if (x1 in (k - 125)..(k+125) + 215)
-                    {
+                if (y1 <= radius + 155f) {
+                    if (x1 in (k - 175)..(k + 175) + 215) {
                         y1 = radius + 155f
                         dY *= -1
                         player.start()
-                    }
-                    else
-                    {
+                    } else {
                         playerPoint += 1
                         runG = false
                         resetNow()
@@ -214,15 +207,12 @@ class againstAICanvas(context: Context, attrs: AttributeSet?) : View(context, at
                     }
                 }
 
-                if (x1 > width - radius)
-                {
+                if (x1 > width - radius) {
                     x1 = width - radius
                     dX *= -1
                     thud.start()
 
-                }
-                else if (x1 < radius)
-                {
+                } else if (x1 < radius) {
                     x1 = radius
                     dX *= -1
                     thud.start()
@@ -234,32 +224,32 @@ class againstAICanvas(context: Context, attrs: AttributeSet?) : View(context, at
         }
     }
 
-    inner class BarThread : Thread() {
-        override fun run(){
-            while(runG){
+    inner class BarT : Thread() {
+        override fun run() {
+            while (runG) {
 
                 k+=kX
-                if(k > width.toFloat() - 100){
-                   kX *= -1
+                if(k > width.toFloat() - 150){
+                kX *= -1
                 }
-                if(k < 100){
-                    kX *= -1
+                if(k < 150){
+                kX *= -1
                 }
                 postInvalidate()
                 sleep(2)
-               /** var ran = (1..5).random()
 
-                if(ran == 1 || ran ==2 || ran ==3 || ran == 4){
+                /**var ran = (1..5).random()
+
+                if (ran == 1 || ran == 2 || ran == 3 || ran == 4) {
                     k = x1
+                    print(ran)
                     postInvalidate()
                     sleep(7)
-                } else{
-                    sleep(1000)**/
+                } else {
+                    sleep(1000)
 
+                } **/
             }
         }
-    }
-    fun barGo(){
-        BarThread().start()
     }
 }

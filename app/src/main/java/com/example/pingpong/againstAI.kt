@@ -7,7 +7,6 @@ import android.os.CountDownTimer
 import androidx.appcompat.app.ActionBar
 import androidx.core.view.isVisible
 import com.example.pingpong.databinding.ActivityAgainstAiBinding
-import com.example.pingpong.databinding.ActivityGameBinding
 
 class againstAI : AppCompatActivity() {
 
@@ -30,7 +29,7 @@ class againstAI : AppCompatActivity() {
            binding.textView2.text = ""
            binding.againstAi.letsGo()
            scoreRefresh()
-           binding.againstAi.BarThread().start()
+           binding.againstAi.BarT().start()
        }
 
         val actionBar: ActionBar? = supportActionBar
