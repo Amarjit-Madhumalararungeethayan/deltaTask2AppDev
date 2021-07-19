@@ -111,14 +111,14 @@ class gameHard(context: Context, attrs: AttributeSet?) : View(context, attrs)
             MotionEvent.ACTION_DOWN -> xChange = event.x
             MotionEvent.ACTION_MOVE ->
             {
-                handleMove(event)
+                moveNow(event)
             }
         }
 
         return true
     }
 
-    private fun handleMove(event: MotionEvent)
+    private fun moveNow(event: MotionEvent)
     {
 
         p1 = p1 - (xChange - event.x)

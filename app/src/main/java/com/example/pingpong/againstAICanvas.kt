@@ -39,6 +39,9 @@ class againstAICanvas(context: Context, attrs: AttributeSet?) : View(context, at
 
     init {
 
+        bg1.color = Color.BLACK
+        bg1.style = Paint.Style.FILL_AND_STROKE
+
         score.color = Color.WHITE
         score.style = Paint.Style.FILL_AND_STROKE
         score.textSize = 120f
@@ -118,14 +121,14 @@ class againstAICanvas(context: Context, attrs: AttributeSet?) : View(context, at
         when (event?.action) {
             MotionEvent.ACTION_DOWN -> xChange = event.x
             MotionEvent.ACTION_MOVE -> {
-                handleMove(event)
+                moveNow(event)
             }
         }
 
         return true
     }
 
-    private fun handleMove(event: MotionEvent) {
+    private fun moveNow(event: MotionEvent) {
 
         p1 = p1 - (xChange - event.x)
         xChange = event.x
