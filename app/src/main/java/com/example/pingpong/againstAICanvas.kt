@@ -170,8 +170,11 @@ class againstAICanvas(context: Context, attrs: AttributeSet?) : View(context, at
 
     }
 
-    val player = MediaPlayer.create(context, R.raw.boi)
-    val thud = MediaPlayer.create(context, R.raw.bounce)
+    val thud1 = MediaPlayer.create(context, R.raw.bally)
+    val thud2 = MediaPlayer.create(context, R.raw.bally)
+    val thud3 = MediaPlayer.create(context, R.raw.bally)
+    val thud4 = MediaPlayer.create(context, R.raw.bally)
+
     val gg = MediaPlayer.create(context, R.raw.gameover)
 
     inner class GameT : Thread() {
@@ -186,7 +189,7 @@ class againstAICanvas(context: Context, attrs: AttributeSet?) : View(context, at
                     if (x1 in (p1 - 75)..(p1 + 75) + barW) {
                         y1 = height - radius - barH - 60f
                         dY *= -1
-                        player.start()
+                        thud1.start()
 
 
                     } else {
@@ -201,7 +204,7 @@ class againstAICanvas(context: Context, attrs: AttributeSet?) : View(context, at
                     if (x1 in (k - 175)..(k + 175) + 215) {
                         y1 = radius + 155f
                         dY *= -1
-                        player.start()
+                        thud2.start()
                     } else {
                         playerPoint += 1
                         runG = false
@@ -213,12 +216,12 @@ class againstAICanvas(context: Context, attrs: AttributeSet?) : View(context, at
                 if (x1 > width - radius) {
                     x1 = width - radius
                     dX *= -1
-                    thud.start()
+                    thud3.start()
 
                 } else if (x1 < radius) {
                     x1 = radius
                     dX *= -1
-                    thud.start()
+                    thud4.start()
                 }
 
                 postInvalidate()

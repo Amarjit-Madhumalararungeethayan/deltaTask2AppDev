@@ -20,42 +20,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        /** val dj = MediaPlayer.create(this, R.raw.beat)
-        dj.isLooping = true
-        dj.start() **/
-
-        /**binding.textView3.setOnClickListener(){
-            binding.imageView.animate().apply {
-                duration = 500
-                rotationYBy(360f)
-            }.start()
-            binding.button.animate().apply {
-                duration = 500
-                rotationYBy(360f)
-            }.start()
-            binding.textView4.animate().apply {
-                duration = 500
-                rotationYBy(360f)
-            }.start()
-            binding.textView5.animate().apply {
-                duration = 500
-                rotationYBy(360f)
-            }.start()
-            binding.textView6.animate().apply {
-                duration = 500
-                rotationYBy(360f)
-            }.start()
-            binding.button2.animate().apply {
-                duration = 500
-                rotationYBy(360f)
-            }.start()
-            binding.imageView2.animate().apply {
-                duration = 1000
-                rotationXBy(720f)
-            }.start()
-            binding.imageView.setImageResource(R.drawable.screenshot_2021_06_14_at_3_51_47_pm)
-        }
-**/
         binding.button.setOnClickListener {
             val intent = Intent(this, Game::class.java)
             startActivity(intent)

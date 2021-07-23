@@ -171,8 +171,11 @@ class gameHard(context: Context, attrs: AttributeSet?) : View(context, attrs)
         barW = 200
     }
 
-    val player = MediaPlayer.create(context, R.raw.boi)
-    val thud = MediaPlayer.create(context, R.raw.bounce)
+    val thud1 = MediaPlayer.create(context, R.raw.bally)
+    val thud2 = MediaPlayer.create(context, R.raw.bally)
+    val thud3 = MediaPlayer.create(context, R.raw.bally)
+    val thud4 = MediaPlayer.create(context, R.raw.bally)
+
     val gg = MediaPlayer.create(context, R.raw.gameover)
 
     inner class GameT : Thread() {
@@ -188,7 +191,7 @@ class gameHard(context: Context, attrs: AttributeSet?) : View(context, attrs)
                         y1 = height - radius - barH - 60f
                         dY *= -1
                         point2 += 1
-                        player.start()
+                        thud1.start()
 
 
                         if (point2 % 1 == 0) {
@@ -208,20 +211,20 @@ class gameHard(context: Context, attrs: AttributeSet?) : View(context, attrs)
                 {
                     x1 = width - radius
                     dX *= -1
-                    thud.start()
+                    thud2.start()
 
                 }
                 else if (y1 < radius + 115f)
                 {
                     y1 = radius + 115f
                     dY *= -1
-                    player.start()
+                    thud3.start()
 
                 } else if (x1 < radius)
                 {
                     x1 = radius
                     dX *= -1
-                    thud.start()
+                    thud4.start()
                 }
                 postInvalidate()
                 sleep(7)

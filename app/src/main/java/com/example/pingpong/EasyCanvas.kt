@@ -144,19 +144,6 @@ class PingPongView(context: Context, attrs: AttributeSet?) : View(context, attrs
 
     private fun resetNow()
     {
-        /**
-        if(gLoBalQ > checkerQ){
-            val myNum = gLoBalQ
-            viewModel.saveTo1(myNum)
-            checkerQ = gLoBalQ
-        }
-        viewModel = ViewModelProvider().get(ViewEasy::class.java)
-        viewModel.readFrom.observe(this, {myNum ->
-
-
-        })
-        **/
-
         val ran1 = (101..850).random()
         x1 = ran1.toFloat()
         y1 = 118f
@@ -165,12 +152,18 @@ class PingPongView(context: Context, attrs: AttributeSet?) : View(context, attrs
         point = 0
 
     }
-    val player = MediaPlayer.create(context, R.raw.boi)
-    val thud = MediaPlayer.create(context, R.raw.bounce)
+
+    val thud1 = MediaPlayer.create(context, R.raw.bally)
+    val thud2 = MediaPlayer.create(context, R.raw.bally)
+    val thud3 = MediaPlayer.create(context, R.raw.bally)
+    val thud4 = MediaPlayer.create(context, R.raw.bally)
+
     val gg = MediaPlayer.create(context, R.raw.gameover)
+
 
     inner class GameT : Thread()
     {
+
         override fun run()
         {
             while (runGe)
@@ -187,7 +180,7 @@ class PingPongView(context: Context, attrs: AttributeSet?) : View(context, attrs
                         dY *= -1
                         point += 1
 
-                        player.start()
+                        thud1.start()
 
                     }
                     else
@@ -202,18 +195,19 @@ class PingPongView(context: Context, attrs: AttributeSet?) : View(context, attrs
                 {
                     x1 = width - radius
                     dX *= -1
-                    thud.start()
+                    thud2.start()
                 }
                 else if (y1 < radius + 115f)
                 {
                     y1 = radius + 115f
                     dY *= -1
+                    thud3.start()
                 }
                 else if (x1 < radius)
                 {
                     x1 = radius
                     dX *= -1
-                    thud.start()
+                    thud4.start()
                 }
 
 
