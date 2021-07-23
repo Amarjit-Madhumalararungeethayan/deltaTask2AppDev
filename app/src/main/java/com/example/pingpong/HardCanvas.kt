@@ -26,6 +26,9 @@ class gameHard(context: Context, attrs: AttributeSet?) : View(context, attrs)
     var y1 = 200f
     var radius = 70f
 
+    var sx = (200..700).random().toFloat()
+    var sy = -(40..250).random().toFloat()
+    val radSlow = 20f
 
     val score = Paint()
     val bg1 = Paint()
@@ -33,6 +36,8 @@ class gameHard(context: Context, attrs: AttributeSet?) : View(context, attrs)
     val levelD = Paint()
     val oppo = Paint()
     val hs = Paint()
+    val slowBall = Paint()
+
 
     init
     {
@@ -59,6 +64,10 @@ class gameHard(context: Context, attrs: AttributeSet?) : View(context, attrs)
 
         oppo.color =  ContextCompat.getColor(context, R.color.voila)
         oppo.style = Paint.Style.FILL
+
+        slowBall.color = ContextCompat.getColor(context, R.color.teal_200)
+        slowBall.isAntiAlias = false
+        slowBall.style = Paint.Style.FILL
     }
 
     var barW = 200
@@ -100,6 +109,10 @@ class gameHard(context: Context, attrs: AttributeSet?) : View(context, attrs)
 
         //Ball
         canvas?.drawCircle(x1, y1, radius, voila)
+
+        //Ball - Powwerup
+        canvas?.drawCircle(sx, sy, radSlow, slowBall)
+
 
     }
 
@@ -160,6 +173,8 @@ class gameHard(context: Context, attrs: AttributeSet?) : View(context, attrs)
         point2 = 0
         lvl = 1
         end = true
+        sx = (200..700).random().toFloat()
+        sy = -(7140..9140).random().toFloat()
         powerReset()
 
     }
@@ -178,13 +193,17 @@ class gameHard(context: Context, attrs: AttributeSet?) : View(context, attrs)
 
     val gg = MediaPlayer.create(context, R.raw.gameover)
 
+    val slow = MediaPlayer.create(context, R.raw.slow)
+
+
+
     inner class GameT : Thread() {
         override fun run() {
             while (runG) {
                 //changes in center
                 x1 += dX
                 y1 += dY
-
+                sy += 1f
 
                 if (y1 >= height - radius - barH - 60f) {
                     if (x1 in (p1 - 75)..(p1 + 75) + barW) {
@@ -225,6 +244,13 @@ class gameHard(context: Context, attrs: AttributeSet?) : View(context, attrs)
                     x1 = radius
                     dX *= -1
                     thud4.start()
+                }
+                if(sy in (height - 135f)..(height - 35f) && (sx in (p1 - 75)..(p1 + 75) + barW)){
+                    slow.start()
+                    dX *= 0.75f
+                    dY *= 0.75f
+                    sx = (200..700).random().toFloat()
+                    sy = -(7140..9140).random().toFloat()
                 }
                 postInvalidate()
                 sleep(7)

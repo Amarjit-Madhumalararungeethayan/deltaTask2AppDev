@@ -1,6 +1,7 @@
 package com.example.pingpong
 
 import android.content.Intent
+import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -29,12 +30,15 @@ class hMode : AppCompatActivity() {
 
         binding.progressBar.isVisible = false
 
+        val expand = MediaPlayer.create(this, R.raw.expand)
+
         binding.btnStart.setOnClickListener {
             binding.textView2.text = ""
             highScoreRefresh()
 
             binding.gameH.letsGo()
             binding.imageView4.setOnClickListener(){
+                expand.start()
                 binding.gameH.powerUp()
                 powerUpCountDown()
                 binding.imageView4.isClickable = false
