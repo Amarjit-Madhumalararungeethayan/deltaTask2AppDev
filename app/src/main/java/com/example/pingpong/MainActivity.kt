@@ -1,18 +1,25 @@
 package com.example.pingpong
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
-import android.media.MediaPlayer
 import android.os.Bundle
-import android.provider.Settings
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import com.example.pingpong.databinding.ActivityMainBinding
+
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
 
     override fun onBackPressed() {
-        finishAffinity()
+        AlertDialog.Builder(this)
+            .setMessage("Are you sure you want to exit?")
+            .setCancelable(false)
+            .setPositiveButton("Yes",
+                DialogInterface.OnClickListener { dialog, id -> this.finish() })
+            .setNegativeButton("No", null)
+            .show()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
