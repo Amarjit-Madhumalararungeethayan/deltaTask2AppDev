@@ -215,8 +215,8 @@ class gameHard(context: Context, attrs: AttributeSet?) : View(context, attrs)
 
                         if (point2 % 1 == 0) {
                             lvl = point2/5 + 1
-                            dX*= 1.05f
-                            dY*= 1.05f
+                            dX*= 1.04f
+                            dY*= 1.04f
                         }
 
                     } else {
@@ -247,8 +247,8 @@ class gameHard(context: Context, attrs: AttributeSet?) : View(context, attrs)
                 }
                 if(sy in (height - 135f)..(height - 35f) && (sx in (p1 - 75)..(p1 + 75) + barW)){
                     slow.start()
-                    dX *= 0.75f
-                    dY *= 0.75f
+                    dX *= 0.55f
+                    dY *= 0.55f
                     sx = (200..700).random().toFloat()
                     sy = -(5140..7140).random().toFloat()
                 }
