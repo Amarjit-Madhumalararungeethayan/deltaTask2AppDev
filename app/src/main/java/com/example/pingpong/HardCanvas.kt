@@ -215,8 +215,8 @@ class gameHard(context: Context, attrs: AttributeSet?) : View(context, attrs)
 
                         if (point2 % 1 == 0) {
                             lvl = point2/5 + 1
-                            dX*= 1.04f
-                            dY*= 1.04f
+                            dX*= 1.05f
+                            dY*= 1.05f
                         }
 
                     } else {
