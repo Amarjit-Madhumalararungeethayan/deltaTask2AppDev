@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
             .setMessage("Are you sure you want to exit?")
             .setCancelable(false)
             .setPositiveButton("Yes",
-                DialogInterface.OnClickListener { dialog, id -> this.finish() })
+                DialogInterface.OnClickListener { dialog, id -> this.finishAffinity() })
             .setNegativeButton("No", null)
             .show()
     }
